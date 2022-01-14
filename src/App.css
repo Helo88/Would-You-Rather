@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+/* @import url('https://fonts.googleapis.com/css2?family=Moo+Lah+Lah&display=swap');
+
+*{
+  font-family: 'Moo Lah Lah', cursive;
+} */
+
+
+*{
+  margin:0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+body{
+  height:100vh
+}
+ul{
+  list-style-type: none;
+}
+button{
+  background-color: transparent;
+}
+.dropdown:focus,.dropdown-toggle:focus {
+   border: none;
+   text-decoration: none;
+  box-shadow: none;
+  outline: none;
+  text-shadow: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav ul li  {
+  margin-right: 10px;
+}
+nav ul li a {
+  font-size: 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#logout{
+  font-size: 25px;
+   font-weight: bolder;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#logo{
+  /* box-shadow: 2px 2px 3px 5px inset #f0ccfde0 ,3px 0px 0px 5px  #F0CCFD; */
+  /* background-color:rgba(207, 206, 206, 0.966); */
 }
