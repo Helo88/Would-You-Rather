@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Qoption } from "./option";
 import {  _saveQuestionAnswer } from "../Data"
 export const UnAnsweredQuestion = ({q})=>{
-  const [flip,setFlip] = useState(0);
+  const [flip,setFlip] = useState(false);
   console.log("hello unanswered")
   // author of ques
 const user = useSelector((state) => { return state.getUsersReducer.filter((u) => u.id === q.author)[0]})
 const authUser = useSelector((state) => state.authReducer)
-
+const history=useHistory()
 // keep 'em controlled
 const [opt, setOpt] = useState(q.optionOne.text);
 const [optionNum, setOptionNum] = useState("optionOne");
@@ -16,21 +17,12 @@ const [optionNum, setOptionNum] = useState("optionOne");
   //  save answer 
  
   _saveQuestionAnswer(authUser,q.id,optionNum)
-  .then( )
+  .then(history.push(`/${authUser.id}`))
+  
  }
 
 
-//  useEffect(() => {
-//   const fetchUsers = () => {
-//     _getUsers()
-//       .then((res) => {
-//         getUsers([...res]);
-//         // console.log(res)
-//       })
-//       .catch((err) => console.log(err));
-//   };
-//   fetchUsers();
-// }, []);
+
 return (
    <>
 
@@ -103,7 +95,7 @@ checked={opt===q.optionTwo.text}
 
     <button 
     className=" mt-1 btn border border-2 border-light w-100"
-    onClick={()=>{console.log("opt is ",opt);handleClick()}}
+    onClick={()=>{handleClick()}}
     >Submit</button>
   </div>
 </div>

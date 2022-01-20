@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { Qoption } from "./option";
+
 export const AnsweredQuestion = ({ q }) => {
   // user answers of ques
   const authUser = useSelector((state) => state.authReducer);
@@ -125,9 +125,9 @@ export const AnsweredQuestion = ({ q }) => {
             className=" d-block  text-light text-center"
             style={{ fontSize: "10px" }}
           >
-            {q.optionOne.votes.length} out of {totalNumVotes} votes
+            {q.optionTwo.votes.length} out of {totalNumVotes} votes
             <span className="px-2"> </span>
-            {optionOneRatio}%
+            {optionTwoRatio}%
           </small>
 
           {/* <p>{q.id}</p> */}

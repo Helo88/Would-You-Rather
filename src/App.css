@@ -20,7 +20,7 @@ ul{
 button{
   background-color: transparent;
 }
-.dropdown:focus,.dropdown-toggle:focus {
+.dropdown:focus,.dropdown-menu li.dropdown-item:focus {
    border: none;
    text-decoration: none;
   box-shadow: none;
@@ -30,9 +30,13 @@ button{
 
 nav ul li  {
   margin-right: 10px;
+  /* transition: border-bottom, 1s ease-in; */
 }
 nav ul li a {
   font-size: 15px;
+}
+nav ul li:active  {
+color: tomato;
 }
 
 #logout{

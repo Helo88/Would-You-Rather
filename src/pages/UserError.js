@@ -5,11 +5,13 @@ export const WrongRoute =()=>{
   
         <div className="p-3"
         style={{
+        backgroundColor:"rgb(170,215,228)",
         backgroundImage:'url("/assets/images/gang.png")',
-        backgroundPosition:"left center",
+        backgroundPosition:"-50px -100px",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        height: "100vh"
+        height: "100vh",
+        width:"100vw"
         }} 
         >
      <Link className="text-dark text-decoration-none " to="/">

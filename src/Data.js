@@ -21,7 +21,7 @@ let users = [
         {"vthrdm985a262al8qx3do": 'optionOne'},
         {"xj352vofupe1dqz9emx13r": 'optionTwo'}
       ],
-      questions: ['loxhs1bqm25b708cmbf3g'],
+      questions: ['loxhs1bqm25b708cmbf3g']
     },
     {
       id: 'Kikyo',
@@ -148,7 +148,8 @@ let users = [
     })
   }
   
-  function formatQuestion ({ optionOneText, optionTwoText, author }) {
+  export const formatQuestion =({ optionOneText, optionTwoText, author })=> {
+    console.log ("hello here ",optionOneText, optionTwoText, author)
     return {
       id: generateUID(),
       timestamp: Date.now(),
@@ -163,27 +164,49 @@ let users = [
       }
     }
   }
-  
+
   export function _saveQuestion (question) {
+    console.log("jiiiii ")
     return new Promise((res, rej) => {
       const authedUser = question.author;
+      console.log("hiiiiiiiiiii ")
       const formattedQuestion = formatQuestion(question)
-  
+       console.log("hello   ",formattedQuestion)
       setTimeout(() => {
-        questions = {
+        questions = [
           ...questions,
-          [formattedQuestion.id]: formattedQuestion
-        }
-        
-        users = {
-          ...users,
-          [authedUser]: {
-            ...users[authedUser],
-            questions: users[authedUser].questions.concat([formattedQuestion.id])
-          }
-        }
-  
+           formattedQuestion
+        ]
+
+        users.map((user)=>{if(user.id==question.author){user.questions.push(formattedQuestion.id)}})
+        console.log(questions)
         res(formattedQuestion)
+      }, 1000)
+    })
+  }
+  
+  export const formatUser =({ name ,avatar,bg})=> {
+    //console.log ("hello here ",optionOneText, optionTwoText, author)
+    return {
+      id: name,
+      name: name,
+      avatarURL: `/assets/images/${avatar}`,
+      bgUrl:`/assets/images/${bg}`,
+      answers: [],
+      questions: []
+    }
+  }
+
+  export function _saveUser (new_user) {
+    console.log("new user   ")
+    return new Promise((res, rej) => {
+      const newUser = formatUser(new_user)
+      setTimeout(() => {
+        users = [
+          ...users,
+           newUser
+        ]
+        res(formatUser)
       }, 1000)
     })
   }
@@ -218,7 +241,7 @@ let users = [
  
   
         res()
-      }, 500)
+      }, 10)
     })
   }
   

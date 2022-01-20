@@ -12,16 +12,15 @@ import { WrongRoute } from "./UserError";
 export const UserHome = () => {
 
   const dispatch = useDispatch();
+  const history=useHistory();
   const [questions, getQuestions] = useState([]);
    
   console.log("hello from userhome")
   let { id } = useParams();
-  // check if user logins there [some users users in buffer]
   const findUsers = useSelector((state) => state.getUsersReducer)
-  //console.log(findUsers.length)
-  // get this user data
-   const user = useSelector((state) => { return state.getUsersReducer.filter((u) => u.id === id)[0]})
-  //console.log("user HOme ", user , "---  ",`${user.bgUrl}`)
+  const user = useSelector((state) => { return state.getUsersReducer.filter((u) => u.id === id)[0]})
+  if (JSON.stringify(user)){}
+  else {history.push("/notfound")}
 
   useEffect(() => {
     const fetchQuestions = () => {
@@ -34,11 +33,16 @@ export const UserHome = () => {
     };
     fetchQuestions ();
 
-    dispatch({
-    type:authenticatedUser,
-    payload: user
-    })
+    
   }, []);
+  useEffect(()=>{
+    console.log("hello from user auty efrf")
+    dispatch({
+      type:authenticatedUser,
+      payload: user
+      })
+  },[user])
+
   useEffect(() => {
     dispatch({
        type:getAllMyQuestions,
@@ -47,17 +51,16 @@ export const UserHome = () => {
   }, [questions]);
 
   return (
-    <>
-    {/* not logined in */}
-      {findUsers.length === 0 ?
+  
 
-
-        <WrongRoute />
+    <DashBoard />
+    
+      /* {JSON.stringify(user)?
+       <DashBoard /> 
         :
-        <DashBoard user={user}/>
-
-      }
-    </>
+        <WrongRoute />
+      } 
+    </> */
 
   )
 

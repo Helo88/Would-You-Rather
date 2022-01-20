@@ -1,27 +1,19 @@
 import { useState } from "react";
-export const Qoption = ({data}) => {
-    const [opt, setOpt] = useState("");
 
+export const Option = ({ getOption,placeholder }) => {
+  const [opt, setOpt] = useState("");
 
+  function handleChange(e){
+   setOpt(e.target.value)
+   getOption(e.target.value)
+  }
 
-return (
-<div className="form-check">
-<input 
-type="radio"
- className="form-check-input"
-id={data.text} 
-name={data.text}
-value={data.text}
-onChange={(e)=>
-{console.log(e.target.value)
-setOpt(e.target.value)
-}}
-checked={opt===data.text}
-
-/>{data.text}
-<label className="form-check-label" htmlFor={data.text}></label>
-</div>
-
-
-
-)}
+  return <>
+    <div className="mb-3 p-0 mt-0">
+    <input type="text" 
+    value={opt}
+    onChange={(e)=>{handleChange(e)}}
+    className="form-control "  placeholder={placeholder} />
+     </div>
+  </>;
+};

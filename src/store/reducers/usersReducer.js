@@ -1,5 +1,6 @@
 
 import { getAllMyUsers } from "../../actions";
+import {addNewUser} from "../../actions";
 
 const INITIAL_STATE = []
 
@@ -9,7 +10,8 @@ const INITIAL_STATE = []
        //console.log(action)
       //  without ...state cuaz each time will add the 4 users again
         return [...action.payload]
-        
+        case addNewUser:
+           return [...state,action.payload]
       default:
       // console.log("default firs",state)
         return state;

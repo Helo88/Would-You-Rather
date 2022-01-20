@@ -5,6 +5,7 @@ import { UserDash } from "../components/userDash";
 import {getAllMyAnsweredQuestions , getAllMyUnAnsweredQuestions} from '../actions'
 
 export const DashBoard =({})=>{
+  console.log("hello frim Dashboard")
   const dispatch =useDispatch()
 
   const [answerdQs,viewAnsweredQs]=useState(false)
@@ -70,9 +71,9 @@ return (
             minHeight:"100vh",
             height: "fit-content"
           }}
-        > 
+        >
+        
         <div className="row">
-          <NavBar user={user} />
           <h2 className="mt-4 mb-1"> Dashboard </h2>
           <div className="mt-4 ">
              <div className="d-flex flex-row ">
