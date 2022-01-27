@@ -1,4 +1,4 @@
-import { getAllMyAnsweredQuestions } from "../../actions";
+import { getAllMyAnsweredQuestions,answerNewQuestion } from "../../actions";
 
 const INITIAL_STATE = []
 
@@ -6,7 +6,8 @@ const INITIAL_STATE = []
     switch (action.type) {
       case getAllMyAnsweredQuestions:
         return [...action.payload]
-        
+        case answerNewQuestion:
+          return [...state,action.payload]
       default:
     
         return state;

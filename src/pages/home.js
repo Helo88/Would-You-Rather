@@ -2,20 +2,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { getAllMyUsers ,addNewUser } from "../actions";
-import { _getUsers } from "../Data";
+import { getAllMyUsers ,addNewUser,authenticatedUser ,getAllMyQuestions} from "../actions";
+import { _getUsers,_getQuestions } from "../Data";
 import { _saveUser } from "../Data";
 
 export const Home = () => {
+  const [questions, getQuestions] = useState([]);
   const dispatch = useDispatch();
   const [users, getUsers] = useState([]);
   const [flip,setFlip]=useState(false)
   const history = useHistory();
-  // let newUsers=
-  // [{name:"Mirako",avatar:"miroo.png",bg:"mirako.png"},
-  // {name:"Kagora",avatar:"kagoraa.png",bg:"kago.png"}]
-  // let f=newUsers
-  //console.log("my action " ,getAllMyUsers)
+  let flag=false
   useEffect(() => {
     const fetchUsers = () => {
       _getUsers()
@@ -29,17 +26,68 @@ export const Home = () => {
     };
     fetchUsers();
   }, );
+  useEffect(() => {
+    const fetchQuestions = () => {
+      _getQuestions()
+        .then((res) => {
+          getQuestions([...res]);
+           console.log(res)
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchQuestions ();
+
+    
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+       type:getAllMyQuestions,
+       payload:questions
+    })
+  }, [questions]);
 
   
-  function handleClick(id) {
+  function handleClick(user) {
+    console.log(user)
     dispatch({
       type: getAllMyUsers,
       payload: users,
     });
-    console.log(id);
-    history.push(`/${id}`);
-  }
-  //console.log(users)
+    
+    dispatch({
+      type:authenticatedUser,
+      payload: user
+      })
+
+     const rou= localStorage.getItem('rememberMe')
+     if (rou.length >0 )
+     {
+      if (rou.indexOf("questions")!==-1)
+      {
+        const q=rou.split("/").slice(-1)[0]
+        for ( let i=0 ;i<questions.length;i++)
+        {
+          if (questions[i].id==q){
+              
+              flag=true
+              history.push(rou)
+          }
+          
+        }
+        if(flag==false){history.push("/notfound")}
+      }
+        else {
+         history.push(rou)
+        }
+      }
+      else {
+        history.push("/")
+      }
+      
+    }
+  
+  
   return (
     <div
       className=" container-fluid p-2 "
@@ -74,10 +122,8 @@ export const Home = () => {
               <li
                 key={user.id}
                 className="dropdown-item px-3 "
-                onClick={() => {
-                  handleClick(user.id);
-                }}
-              >
+                onClick={()=>handleClick(user)}
+                 >
                 <img
                   src={user.avatarURL}
                   style={{

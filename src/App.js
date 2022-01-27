@@ -1,41 +1,57 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link, useHistory ,useLocation,useParams,Redirect } from "react-router-dom";
-import { Home } from "./pages/home";
+import LoadingBar from 'react-redux-loading-bar';
+
 import "./App.css";
+import { Home } from "./pages/home"
 import { UserHome } from "./pages/userHome";
 import { WrongRoute } from "./pages/UserError";
 import { LeaderBoard } from "./pages/LeaderBoard";
 import { NavBar } from "./components/navBar";
-import { useEffect } from "react";
+import { Questions } from "./pages/Questions";
 import { NewQuestion } from "./pages/NewQuestion";
 
 function App() {
+  
   const location = useLocation();
+  const history=useHistory();
    console.log("location is ",location)
+   const authUser= useSelector((state)=>state.authReducer)
+
+  
+   if(location.pathname!=="/login" && (location.pathname!=="/notfound")      )
+   localStorage.setItem('rememberMe', location.pathname);
   return (
-    
-    <Switch>
-    <Route path={"/notfound"}  exact={true} component={WrongRoute} />
-    <Route>
-    <div className="" style={{overflow:"hidden"}}>
-      {/* location can be used like that if browser is wrapping App from outside */}
-       {location.pathname === '/' ? null : 
-        location.pathname === '*'?   null: 
-       <NavBar />}
-        <Switch> 
-            <Route path={"/"} exact={true} component={Home} />
-            <Route path={"/:id"} exact={true} component={UserHome} />
-            <Route path={"/:id/newQuestion"} component={NewQuestion}/>
-            <Route path={"/:id/leaderboard"} exact={true} component={LeaderBoard}/>
-            <Redirect to="/notfound"/>
-            {/* <Route path={"*"}  render={ ()=> (<Redirect to='/' />)} /> */}
+<>
+{/* <LoadingBar /> */}
 
-        </Switch>
+     <Switch> 
+     <Route path={"/notfound"}  exact={true} component={WrongRoute} />
+     <Route path={"/login"}  exact={true} component={Home} />
 
-    </div>
-    </Route>
-    </Switch>
-    
+     
+       {authUser.id?
+       <>
+       <NavBar/>
+       <Switch>
+       
+      <Route path={"/"} exact={true} component={UserHome} />
+      <Route path={"/questions/:id"} exact={true} component={Questions}/>
+      <Route path={"/add"} exact={true} component={NewQuestion} />
+      <Route path={"/leaderboard"} exact={true} component={LeaderBoard} />
+      <Redirect to="/notfound"/>
+     </Switch>
+     </>
+   :
+   <Home/>
+   
+   }
+   
+</Switch> 
+
+</>
   );
 }
 

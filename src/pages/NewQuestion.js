@@ -35,7 +35,7 @@ export const NewQuestion = () => {
         type: addNewQuestion,
         payload: data,
       });
-      history.push(`/${user.id}`);
+      history.push("/");
     });
   }
 
@@ -48,9 +48,11 @@ export const NewQuestion = () => {
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        height: "100vh",
+        height:"100%",
+        minHeight: "100vh",
         width: "100vw",
         position: "relative",
+        overflowY:"hidden"
       }}
     >
       <form

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { UserDash } from "../components/userDash";
 import {getAllMyAnsweredQuestions , getAllMyUnAnsweredQuestions} from '../actions'
+import { UnAnswers } from "../components/unanswers";
 
 export const DashBoard =({})=>{
   console.log("hello frim Dashboard")
@@ -12,10 +13,8 @@ export const DashBoard =({})=>{
   // get all Questions
 
   const user = useSelector((state) => state.authReducer);
- const allQues = useSelector((state) => state.getQuestionsReducer)
- // const allAnQues = useSelector((state) => state.getAnsweredQsReducer)
-  //const allUnAnQues = useSelector((state) => state.getUnAnsweredQsReducer)
-  //console.log("user ques ",JSON.stringify(allQues))
+  const allQues = useSelector((state) => state.getQuestionsReducer)
+
   const answeredQues=[];
   const unAnsweredQues=[];
   let flag=false;
@@ -54,7 +53,8 @@ export const DashBoard =({})=>{
     payload:unAnsweredQues
   })
 },[unAnsweredQues])
-
+answeredQues.sort((a,b)=>new Date(b.timestamp) - new Date(a.timestamp))
+unAnsweredQues.sort((a,b)=>new Date(b.timestamp) - new Date(a.timestamp))
 //console.log("answered question ",JSON.stringify(answeredQues))
 //console.log("\n\n")
 //console.log("unAnswered question ",JSON.stringify(unAnsweredQues))

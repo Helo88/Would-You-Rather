@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch } from "react-redux";
 import { WrongRoute } from "../pages/UserError";
+import {unauthenticatedUser} from "../actions"
 
 export const NavBar = ({}) => {
+  console.log("hello navbar")
+  const dispatch=useDispatch()
   const user = useSelector((state) => state.authReducer);
   let [highlight, setHighLight] = useState("dashboard");
-  //let { id } = useParams();
-  //console.log("this id user from nav",JSON.stringify(user.id))
-  //console.log(JSON.stringify(user)===undefined?"yues":"ni")
   const history = useHistory();
+  console.log("hi navi ",highlight)
+  const location=useLocation()
   function handleClick() {
     history.goBack();
   }
+  useEffect(()=>{
+    location.pathname=="/"?setHighLight("dashboard"):setHighLight(highlight)
+  },[location])
   //console.log("hello user " ,JSON.stringify(user))
   return (
     <>
@@ -55,12 +60,12 @@ export const NavBar = ({}) => {
                   onClick={() => setHighLight("dashboard")}
                   style={{
                     borderBottom:
-                      highlight == "dashboard" ? "2px solid black" : "",
+                      location.pathname == "/" ? "2px solid black" : "",
                   }}
                 >
                   <Link
                     className="nav-link d-block text-dark"
-                    to={`/${user.id}`}
+                    to={`/`}
                   >
                     Dashboard
                   </Link>
@@ -71,12 +76,12 @@ export const NavBar = ({}) => {
                   onClick={() => setHighLight("newQues")}
                   style={{
                     borderBottom:
-                      highlight == "newQues" ? "2px solid black" : "",
+                    location.pathname == "/add" ? "2px solid black" : "",
                   }}
                 >
                   <Link
                     className="nav-link d-block text-dark"
-                    to={`/${user.id}/newQuestion`}
+                    to={`/add`}
                   >
                     New Question
                   </Link>
@@ -87,12 +92,12 @@ export const NavBar = ({}) => {
                   onClick={() => setHighLight("leaderboard")}
                   style={{
                     borderBottom:
-                      highlight == "leaderboard" ? "2px solid black" : "",
+                    location.pathname == "/leaderboard" ? "2px solid black" : "",
                   }}
                 >
                   <Link
                     className="nav-link d-block text-dark"
-                    to={`/${user.id}/leaderboard`}
+                    to={`/leaderboard`}
                   >
                     Leader Board
                   </Link>
@@ -113,8 +118,16 @@ export const NavBar = ({}) => {
                   </a>
                 </li>
 
-                <li className="nav-item">
-                  <Link to="/">
+                <li className="nav-item"
+                onClick={()=>{
+                 dispatch({
+                   type:unauthenticatedUser,
+                   payload:{}
+                 })
+                 localStorage.setItem('rememberMe', "");
+                }}
+                >
+                  <Link to="/login">
                     <i
                       className="bi bi-box-arrow-right d-block text-dark"
                       id="logout"

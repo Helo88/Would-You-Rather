@@ -1,4 +1,4 @@
-import {  getAllMyUnAnsweredQuestions } from "../../actions";
+import {  getAllMyUnAnsweredQuestions,popQuestion} from "../../actions";
 
 const INITIAL_STATE = []
 
@@ -6,7 +6,8 @@ const INITIAL_STATE = []
     switch (action.type) {
       case getAllMyUnAnsweredQuestions:
         return [...action.payload]
-        
+      case popQuestion :
+        return state.filter((q)=>q.id==action.payload.id)
       default:
     
         return state;

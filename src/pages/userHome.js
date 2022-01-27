@@ -16,39 +16,39 @@ export const UserHome = () => {
   const [questions, getQuestions] = useState([]);
    
   console.log("hello from userhome")
-  let { id } = useParams();
+  
   const findUsers = useSelector((state) => state.getUsersReducer)
-  const user = useSelector((state) => { return state.getUsersReducer.filter((u) => u.id === id)[0]})
+  const user = useSelector((state) => state.authReducer)
   if (JSON.stringify(user)){}
   else {history.push("/notfound")}
 
-  useEffect(() => {
-    const fetchQuestions = () => {
-      _getQuestions()
-        .then((res) => {
-          getQuestions([...res]);
-           console.log(res)
-        })
-        .catch((err) => console.log(err));
-    };
-    fetchQuestions ();
+  // useEffect(() => {
+  //   const fetchQuestions = () => {
+  //     _getQuestions()
+  //       .then((res) => {
+  //         getQuestions([...res]);
+  //          console.log(res)
+  //       })
+  //       .catch((err) => console.log(err));
+  //   };
+  //   fetchQuestions ();
 
     
-  }, []);
-  useEffect(()=>{
-    console.log("hello from user auty efrf")
-    dispatch({
-      type:authenticatedUser,
-      payload: user
-      })
-  },[user])
+  // }, []);
+  // useEffect(()=>{
+  //   console.log("hello from user auty efrf")
+  //   dispatch({
+  //     type:authenticatedUser,
+  //     payload: user
+  //     })
+  // },[user])
 
-  useEffect(() => {
-    dispatch({
-       type:getAllMyQuestions,
-       payload:questions
-    })
-  }, [questions]);
+  // useEffect(() => {
+  //   dispatch({
+  //      type:getAllMyQuestions,
+  //      payload:questions
+  //   })
+  // }, [questions]);
 
   return (
   

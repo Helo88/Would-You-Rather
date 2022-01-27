@@ -1,6 +1,6 @@
 import {AnsweredQuestion} from "./AnsweredQuestion";
 import {UnAnsweredQuestion} from "./unAnsweredQuestion";
-
+import { UnAnswers } from "./unanswers";
 export const UserDash =({allQues , qState})=>{
 // console.log("all form me " +JSON.stringify(allQues))
 console.log("hello from userDash")
@@ -8,15 +8,15 @@ console.log("hello from userDash")
     <ul className="col-md-8 col-12 ">
         {qState==="unanswered"
         ? allQues.map((Q)=>{
-         return <UnAnsweredQuestion q={Q} key= {Q.id}/>
+         return <UnAnswers id={Q.id} text={Q.optionOne.text} author={Q.author} key= {Q.id}/>
         })
         :
         allQues.map((Q)=>{
-          return  <AnsweredQuestion  q={Q}  key= {Q.id} />
+          return  <UnAnswers  id={Q.id} text={Q.optionTwo.text}  author={Q.author} key= {Q.id} />
         })
-       
+
     }
     </ul>
-    
+
     </>
 }

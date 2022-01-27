@@ -214,15 +214,7 @@ let users = [
   export function _saveQuestionAnswer (authedUser, qid, answer ) {
     return new Promise((res, rej) => {
       setTimeout(() => {
-      console.log("selected option ",answer)
-          for(let i=0; i<users.length;i++){
-            if(users[i].id==authedUser.id){
-              let  newObj ={}
-                newObj[qid]=answer
-              users[i].answers.push(newObj)
-              console.log("updated answers "+JSON.stringify(users[i].answers))
-            }
-          }
+      
           for(let i=0; i<questions.length;i++){
             if(questions[i].id==qid){
               if(answer==="optionOne")
@@ -232,7 +224,7 @@ let users = [
               }
               else {
                 {
-                  console.log("option 2")
+                  console.log("option 2 from q")
                   questions[i].optionTwo.votes.push(authedUser)
                 }
               }

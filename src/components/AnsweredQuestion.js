@@ -1,8 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
-export const AnsweredQuestion = ({ q }) => {
-  // user answers of ques
+export const AnsweredQuestion = ({ id}) => {
+
+  const q =useSelector((state) => {
+    return state.getQuestionsReducer.filter((q) => q.id === id)[0];
+  });
+  console.log("this is  my q ", JSON.stringify(q))
+  
   const authUser = useSelector((state) => state.authReducer);
   const allAnQues = useSelector((state) => state.getAnsweredQsReducer);
   // get question corsponding index in user answers
@@ -10,13 +15,13 @@ export const AnsweredQuestion = ({ q }) => {
   let selectedOption;
   // statics
   const totalNumVotes = q.optionOne.votes.length + q.optionTwo.votes.length;
-  const optionOneRatio = parseInt(
-    (q.optionOne.votes.length / totalNumVotes) * 100
-  );
-  const optionTwoRatio = parseInt(
-    (q.optionTwo.votes.length / totalNumVotes) * 100
-  );
-
+  console.log("updated ", totalNumVotes," -- ",q.optionTwo.votes.length)
+  const optionOneRatio = totalNumVotes!=0? parseInt(
+    (q.optionOne.votes.length / totalNumVotes) * 100):0
+  ;
+  const optionTwoRatio = totalNumVotes !=0? parseInt(
+    (q.optionTwo.votes.length / totalNumVotes) * 100):0
+  console.log("updated2  ", totalNumVotes," -- " ,optionOneRatio," -- ",optionTwoRatio)
   const user = useSelector((state) => {
     return state.getUsersReducer.filter((u) => u.id === q.author)[0];
   });
@@ -30,17 +35,37 @@ export const AnsweredQuestion = ({ q }) => {
     }
   }
 
-  console.log(QuesIndex);
+  console.log(QuesIndex,selectedOption,"--",totalNumVotes);
   return (
     <>
-      <div
-        className="card d-flex flex-row align-items-center p-0 col-md-9 col-12"
+          <div
+        className="p-3  mb-2 "
         style={{
           border: "none",
           backgroundColor: "transparent",
           borderBottom: "2px dotted white",
+          backgroundImage: `url(${authUser.bgUrl})`,
+          backgroundPosition: "right right",
+          backgroundAttachment:"fixed",
+          width:"100vw",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          height:"100%",
+          minHeight:"100vh",
+          position:"relative"
+          
         }}
       >
+        
+          <div className=" card d-flex flex-row  border-0 align-items-center col-md-6 col-12 mt-5 p-3"
+            style={{
+              backdropFilter: "blur(5px)",
+              backgroundColor:"transparent",
+              position:"absolute",
+              top: "40%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+            }}>
         <img
           className="card-img-top"
           src={user.avatarURL}
@@ -134,6 +159,7 @@ export const AnsweredQuestion = ({ q }) => {
           {/* <p>{Object.values(authUser.answers[QuesIndex])}</p> */}
           {/* <p>{totalNumVotes}</p> */}
         </div>
+      </div>
       </div>
     </>
   );
